@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.musicManager.model.Usuario;
-import com.musicManager.service.UsuarioService;
+import com.musicManager.service.UsuarioServiceImpl;
 
 @RestController
 public class UsuarioController {
 	
 	@Autowired
-	UsuarioService usuarioService;
+	UsuarioServiceImpl usuarioService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/usuarios", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario){

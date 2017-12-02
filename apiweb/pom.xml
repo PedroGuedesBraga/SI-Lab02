@@ -46,6 +46,7 @@
     		<artifactId>spring-data-jpa</artifactId>
 		</dependency>
 		
+		
 		<!-- https://mvnrepository.com/artifact/javax.persistence/persistence-api -->
 		<dependency>
     		<groupId>javax.persistence</groupId>
@@ -58,6 +59,7 @@
 		    <groupId>org.postgresql</groupId>
 		    <artifactId>postgresql</artifactId>
 		</dependency>
+			
 		
 	</dependencies>
 

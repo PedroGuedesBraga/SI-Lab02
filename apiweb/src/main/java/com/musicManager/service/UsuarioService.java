@@ -1,21 +1,7 @@
 package com.musicManager.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.musicManager.model.Usuario;
-import com.musicManager.repository.UsuarioRepository;
 
-@Service
-public class UsuarioService {
-
-	@Autowired
-	UsuarioRepository usuarioRepository;
-	
-	
-	public void cadastrar(Usuario usuario) {
-		usuarioRepository.save(usuario);
-		
-	}
-	
+public interface UsuarioService {
+	public void cadastrar(Usuario usuario);
 }
