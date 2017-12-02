@@ -12,10 +12,13 @@ public class Usuario{
 	@GeneratedValue
 	private Integer id;
 	
+	@Column
 	private String nome;
 	
+	@Column(unique = true)
 	private String email;
 	
+	@Column
 	private String senha;
 	
 	
