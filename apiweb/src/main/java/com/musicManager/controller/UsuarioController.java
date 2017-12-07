@@ -40,12 +40,13 @@ public class UsuarioController {
 	}
 	
 	//Adiciona uma nova playlist
-	@RequestMapping(value="/usuarios/playlist/{emailDoUsuario}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Playlist> adicionarPlaylist(@RequestBody Playlist playlist, @PathVariable String emailDoUsuario){
-		if(usuarioService.adicionarPlaylist(playlist, emailDoUsuario)) {
+	@RequestMapping(value="usuarios/playlist/{nomeDoUsuario}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Playlist> adicionarPlaylist(@RequestBody Playlist playlist, @PathVariable String nomeDoUsuario){
+		
+		if(usuarioService.adicionarPlaylist(playlist, nomeDoUsuario)) {
 			return new ResponseEntity<>(playlist, HttpStatus.CREATED);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); 
 	}
 	
 	

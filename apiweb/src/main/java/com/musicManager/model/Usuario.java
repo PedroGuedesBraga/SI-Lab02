@@ -1,8 +1,9 @@
 package com.musicManager.model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,8 +26,8 @@ public class Usuario{
 	@Column
 	private String senha;
 	
-	@OneToMany
-	private List<Playlist> playlists = new LinkedList<Playlist>();
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Playlist> playlists = new ArrayList<Playlist>();
 	
 	
 	

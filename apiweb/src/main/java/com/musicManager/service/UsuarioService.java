@@ -33,11 +33,12 @@ public class UsuarioService{
 		return new Usuario(); //Retorna uma flag
 	}
 	
+	//TIRAR TRATAMENTO POR COLUMN(UNIQUE=TRUE)
 	//Add playlist a um usuario(email dele) passado no parametro, retorna true se foi add ou false se n foi
-	public boolean adicionarPlaylist(Playlist playlist, String emailDoUsuario) {
+	public boolean adicionarPlaylist(Playlist playlist, String nomeDoUsuario) {
 		List<Usuario> usuarios = usuarioRepository.findAll();
 		for(Usuario u : usuarios) {
-			if(u.getEmail().equals(emailDoUsuario)) {
+			if(u.getNome().equals(nomeDoUsuario)) {
 				boolean retorno = u.adicionaPlaylist(playlist);
 				usuarioRepository.save(u);
 				return retorno;
