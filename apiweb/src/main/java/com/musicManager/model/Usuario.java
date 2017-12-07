@@ -1,9 +1,13 @@
 package com.musicManager.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Usuario{
@@ -20,6 +24,9 @@ public class Usuario{
 	
 	@Column
 	private String senha;
+	
+	@OneToMany
+	private List<Playlist> playlists = new LinkedList<Playlist>();
 	
 	
 	
@@ -46,5 +53,34 @@ public class Usuario{
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
+	}
+	
+	
+	//Add playlist no usuario
+	public boolean adicionaPlaylist(Playlist playlist) {
+		for(Playlist p : this.getPlaylists()) {
+			if(p.getNome().equals(playlist.getNome())){
+				return false; //Duas playlists nao podem ter o mesmo nome
+			}
+		}
+		this.getPlaylists().add(playlist);
+		return true;
+	}
+	
+	//Add musica em uma playlist q o usuario ja tem
+	public boolean adicionaMusicaEmPlaylist(String nomeDaPlaylist, Musica musica) {
+		for(Playlist p : this.getPlaylists()) {
+			if(p.getNome().equals(nomeDaPlaylist)) {
+				p.adicionaMusica(musica);
+				return true;
+			}
+		}
+		return false;
 	}
 }

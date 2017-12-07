@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.musicManager.model.Musica;
+import com.musicManager.model.Playlist;
 import com.musicManager.model.Usuario;
 import com.musicManager.repository.UsuarioRepository;
 
@@ -30,5 +32,40 @@ public class UsuarioService{
 		}
 		return new Usuario(); //Retorna uma flag
 	}
+	
+	//Add playlist a um usuario(email dele) passado no parametro, retorna true se foi add ou false se n foi
+	public boolean adicionarPlaylist(Playlist playlist, String emailDoUsuario) {
+		List<Usuario> usuarios = usuarioRepository.findAll();
+		for(Usuario u : usuarios) {
+			if(u.getEmail().equals(emailDoUsuario)) {
+				boolean retorno = u.adicionaPlaylist(playlist);
+				usuarioRepository.save(u);
+				return retorno;
+			}
+		}
+		return false; //Nenhum usuario com o nome igual o da passado no parametro foi encontrado
+	}
+	
+	//Adiciona uma musica em uma playlist de um determinado usuario
+	public boolean adicionarMusicaEmPlaylist(String emailDoUsuario, String nomeDaPlaylist, Musica musica) {
+		for(Usuario u : usuarioRepository.findAll()) {
+			if (u.getEmail().equals(emailDoUsuario)) {
+				return u.adicionaMusicaEmPlaylist(nomeDaPlaylist, musica);
+			}
+		}
+		return false; //Se o usuario nao foi achado
+	}
+	
+	//Retorna todas as playlists de um usuario pelo nome dele - Se ele nao existir, retorna uma colecao de playlists vazia
+	public List<Playlist> getPlaylists(String emailDoUsuario){
+		for (Usuario u : usuarioRepository.findAll()) {
+			if(u.getEmail().equals(emailDoUsuario)) {
+				return u.getPlaylists();
+			}
+		}
+		return new LinkedList<Playlist>();
+	}
+	
+	
 	
 }
