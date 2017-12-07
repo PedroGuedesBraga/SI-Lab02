@@ -12,7 +12,7 @@ public class Artista {
 	@GeneratedValue
 	private Integer id;
 	
-	@Column(unique = true)
+	@Column
 	private String nome;
 	
 	@Column(length = 10000)

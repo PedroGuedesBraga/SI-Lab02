@@ -20,6 +20,7 @@ public class Playlist {
 	@Column
 	private String nome;
 	
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Musica> musicas = new LinkedList<Musica>();
 	

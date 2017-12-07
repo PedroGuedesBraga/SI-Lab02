@@ -25,8 +25,11 @@ public class UsuarioController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/usuarios/cadastro", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario){
-		Usuario usuarioSalvo = usuarioService.cadastrar(usuario);
-		return new ResponseEntity<Usuario>(usuarioSalvo, HttpStatus.CREATED);
+		boolean foiCadastrado = usuarioService.cadastrar(usuario);
+		if(foiCadastrado) {
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/usuarios/login", produces = MediaType.APPLICATION_JSON_VALUE )
@@ -39,14 +42,14 @@ public class UsuarioController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	//Adiciona uma nova playlist
+	//Adiciona uma nova playlist (%20 para tratar espacos)
 	@RequestMapping(value="usuarios/playlist/{nomeDoUsuario}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Playlist> adicionarPlaylist(@RequestBody Playlist playlist, @PathVariable String nomeDoUsuario){
 		
 		if(usuarioService.adicionarPlaylist(playlist, nomeDoUsuario)) {
-			return new ResponseEntity<>(playlist, HttpStatus.CREATED);
+			return new ResponseEntity<>(HttpStatus.CREATED);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); 
+		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);  
 	}
 	
 	
@@ -54,15 +57,15 @@ public class UsuarioController {
 	@RequestMapping(value="/usuarios/playlist/{emailDoUsuario}/{nomeDaPlaylist}",method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Musica> adicionarMusicaEmPlaylist(@PathVariable String emailDoUsuario, @PathVariable String nomeDaPlaylist, @RequestBody Musica musica){
 		if(usuarioService.adicionarMusicaEmPlaylist(emailDoUsuario, nomeDaPlaylist, musica)) {
-			return new ResponseEntity<>(musica, HttpStatus.CREATED);
+			return new ResponseEntity<>(HttpStatus.CREATED);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 	}
 	
 	//Retorna todas as playlists de um usuario
-	@RequestMapping(value="/usuarios/playlist/{emailDoUsuario}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Playlist>> getPlaylists(@PathVariable String emailDoUsuario){
-		return new ResponseEntity<List<Playlist>>(usuarioService.getPlaylists(emailDoUsuario), HttpStatus.OK);
+	@RequestMapping(value="/usuarios/playlist/{nomeDoUsuario}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Playlist>> getPlaylists(@PathVariable String nomeDoUsuario){
+		return new ResponseEntity<List<Playlist>>(usuarioService.getPlaylists(nomeDoUsuario), HttpStatus.OK);
 	}
 	
 	
