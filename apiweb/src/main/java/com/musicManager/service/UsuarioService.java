@@ -65,9 +65,9 @@ public class UsuarioService{
 	}
 	
 	//Retorna todas as playlists de um usuario pelo nome dele - Se ele nao existir, retorna uma colecao de playlists vazia
-	public List<Playlist> getPlaylists(String emailDoUsuario){
+	public List<Playlist> getPlaylists(String nomeDoUsuario){
 		for (Usuario u : usuarioRepository.findAll()) {
-			if(u.getEmail().equals(emailDoUsuario)){
+			if(u.getNome().equals(nomeDoUsuario)){
 				return u.getPlaylists();
 			}
 		}
