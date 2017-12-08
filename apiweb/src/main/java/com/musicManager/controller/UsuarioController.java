@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.musicManager.model.Artista;
 import com.musicManager.model.Musica;
 import com.musicManager.model.Playlist;
 import com.musicManager.model.Usuario;
@@ -66,6 +67,35 @@ public class UsuarioController {
 	@RequestMapping(value="/usuarios/playlist/{nomeDoUsuario}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Playlist>> getPlaylists(@PathVariable String nomeDoUsuario){
 		return new ResponseEntity<List<Playlist>>(usuarioService.getPlaylists(nomeDoUsuario), HttpStatus.OK);
+	}
+	
+	//Receber um artista ja existente no sistema
+	@RequestMapping(value="/usuarios/favoritos/{id}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Artista> adicionarArtistaFavorito(@RequestBody Artista favorito, @PathVariable Integer id){
+		if(usuarioService.adicionaArtistaFavorito(favorito, id)) {
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+	}
+	
+	//Recebe os artistas favoritos de um usuario de determinado id
+	@RequestMapping(value="/usuarios/favoritos/{id}", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Artista>> getFavoritos(@PathVariable Integer id){
+		List<Artista> result = usuarioService.getFavoritos(id);
+		if(!result.isEmpty()) {
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	
+	//Recebe o id do usuario e o id do artista favorito e deleta esse artista da colecao de artistas favoritos do usuario
+	@RequestMapping(value="/usuarios/favoritos/{idUsuario}/{idFavorito}", method=RequestMethod.DELETE)
+	public ResponseEntity<Artista> deletarArtistaDosFavoritos(@PathVariable Integer idUsuario, @PathVariable Integer idFavorito){
+		if(usuarioService.deletarArtistaDosFavoritos(idUsuario, idFavorito)) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	

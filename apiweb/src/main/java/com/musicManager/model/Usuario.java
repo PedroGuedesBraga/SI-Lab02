@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -26,8 +27,11 @@ public class Usuario{
 	@Column
 	private String senha;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL) //OneToMany - Relacionamento Usuario para muitas playlists. Em cascata (Cascade - Usado para persistir tambem as entidades relacionadas)
 	private List<Playlist> playlists = new ArrayList<Playlist>();
+	
+	@ManyToMany(cascade = CascadeType.ALL) //Relacionamento de muitos para muitos. Um usuario se relaciona com varios artistas assim como um artista se relaciona com varios usuarios
+	private List<Artista> artistasFavoritos = new ArrayList<Artista>();
 	
 	
 	
@@ -61,6 +65,13 @@ public class Usuario{
 	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
 	}
+	public List<Artista> getArtistasFavoritos() {
+		return artistasFavoritos;
+	}
+	public void setArtistasFavoritos(List<Artista> artistasFavoritos) {
+		this.artistasFavoritos = artistasFavoritos;
+	}
+	
 	
 	
 	//Add playlist no usuario
@@ -83,4 +94,27 @@ public class Usuario{
 		}
 		return false;
 	}
+	
+	
+	public boolean adicionaArtistaFavorito(Artista favorito) {
+		for(Artista a : this.getArtistasFavoritos()) {
+			if(a.getNome().equals(favorito.getNome())) {
+				return false;
+			}
+		}
+		this.getArtistasFavoritos().add(favorito);
+		return true;
+	}
+	
+	public boolean removeArtistaFavorito(Integer idFavorito) {
+		List<Artista> favoritos = this.getArtistasFavoritos();
+		for(int i = 0; i < favoritos.size(); i++) {
+			if(favoritos.get(i).getId().equals(idFavorito)) {
+				favoritos.remove(i);
+				return true;
+			}
+		}
+		return false; //Nao foi achado artista com esse id.
+	}
+	
 }

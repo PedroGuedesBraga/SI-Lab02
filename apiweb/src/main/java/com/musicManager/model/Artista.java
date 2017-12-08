@@ -15,7 +15,7 @@ public class Artista {
 	@Column
 	private String nome;
 	
-	@Column(length = 10000)
+	@Column(length = 100000)
 	private String urlImagem;
 	
 	

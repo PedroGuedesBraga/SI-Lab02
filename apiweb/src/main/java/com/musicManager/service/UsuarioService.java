@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.musicManager.model.Artista;
 import com.musicManager.model.Musica;
 import com.musicManager.model.Playlist;
 import com.musicManager.model.Usuario;
@@ -76,6 +77,38 @@ public class UsuarioService{
 		return new LinkedList<Playlist>();
 	}
 	
+	public boolean adicionaArtistaFavorito(Artista favorito, Integer id){
+		List<Usuario> usuarios = usuarioRepository.findAll();
+		for (Usuario u : usuarios) {
+			if(u.getId().equals(id)) {
+				boolean retorno = u.adicionaArtistaFavorito(favorito);
+				usuarioRepository.save(u); //Atualiza o bd
+				return retorno;
+			}
+		}
+		return false; //Usuario nao encontrado
+	}
 	
+	public List<Artista> getFavoritos(Integer id){
+		List<Usuario> usuarios = usuarioRepository.findAll();
+		for (Usuario u : usuarios) {
+			if(u.getId().equals(id)) {
+				return u.getArtistasFavoritos();
+			}
+		}
+		return new LinkedList<Artista>();
+	}
+	
+	public boolean deletarArtistaDosFavoritos(Integer idUsuario, Integer idFavorito) {
+		List<Usuario> usuarios = usuarioRepository.findAll();
+		for (Usuario u : usuarios) {
+			if(u.getId().equals(idUsuario)) {
+				boolean retorno = u.removeArtistaFavorito(idFavorito);
+				usuarioRepository.save(u);
+				return retorno;
+			}
+		}
+		return false; //Nao foi achado usuario
+	}
 	
 }
