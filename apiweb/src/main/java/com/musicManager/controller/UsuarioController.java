@@ -53,10 +53,10 @@ public class UsuarioController {
 	}
 	
 	
-	//Adiciona uma musica em uma playlist ja existente de um usuario
-	@RequestMapping(value="/usuarios/playlist/{emailDoUsuario}/{nomeDaPlaylist}",method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Musica> adicionarMusicaEmPlaylist(@PathVariable String emailDoUsuario, @PathVariable String nomeDaPlaylist, @RequestBody Musica musica){
-		if(usuarioService.adicionarMusicaEmPlaylist(emailDoUsuario, nomeDaPlaylist, musica)) {
+	//Adiciona uma musica em uma playlist ja existente de um usuario - //A MUSICA RECEBIDA JA DEVE TER UM ID!!!!!!!!!!!!!!
+	@RequestMapping(value="/usuarios/playlist/{nomeDoUsuario}/{nomeDaPlaylist}",method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Musica> adicionarMusicaEmPlaylist(@PathVariable String nomeDoUsuario, @PathVariable String nomeDaPlaylist, @RequestBody Musica musica){
+		if(usuarioService.adicionarMusicaEmPlaylist(nomeDoUsuario, nomeDaPlaylist, musica)) {
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);

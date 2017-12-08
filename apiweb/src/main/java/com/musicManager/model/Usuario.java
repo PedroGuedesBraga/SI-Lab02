@@ -78,8 +78,7 @@ public class Usuario{
 	public boolean adicionaMusicaEmPlaylist(String nomeDaPlaylist, Musica musica) {
 		for(Playlist p : this.getPlaylists()) {
 			if(p.getNome().equals(nomeDaPlaylist)) {
-				p.adicionaMusica(musica);
-				return true;
+				return p.adicionaMusica(musica);
 			}
 		}
 		return false;

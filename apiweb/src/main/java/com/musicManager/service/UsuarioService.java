@@ -55,10 +55,12 @@ public class UsuarioService{
 	}
 	
 	//Adiciona uma musica em uma playlist de um determinado usuario
-	public boolean adicionarMusicaEmPlaylist(String emailDoUsuario, String nomeDaPlaylist, Musica musica) {
+	public boolean adicionarMusicaEmPlaylist(String nomeDoUsuario, String nomeDaPlaylist, Musica musica) {
 		for(Usuario u : usuarioRepository.findAll()) {
-			if (u.getEmail().equals(emailDoUsuario)) {
-				return u.adicionaMusicaEmPlaylist(nomeDaPlaylist, musica);
+			if (u.getNome().equals(nomeDoUsuario)) {
+				boolean retorno = u.adicionaMusicaEmPlaylist(nomeDaPlaylist, musica);
+				usuarioRepository.save(u); //Update do usuario
+				return retorno;
 			}
 		}
 		return false; //Se o usuario nao foi achado

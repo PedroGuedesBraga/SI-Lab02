@@ -46,7 +46,13 @@ public class Playlist {
 	}
 
 
-	public void adicionaMusica(Musica musica){
-		this.musicas.add(musica);
+	public boolean adicionaMusica(Musica musica){
+		for (Musica m : musicas) {
+			if(m.getNome().equals(musica.getNome()) && m.getAlbum().equals(musica.getAlbum())) {
+				return false;
+			}
+		}
+		musicas.add(musica);
+		return true;
 	}
 }
