@@ -14,12 +14,12 @@ public class ArtistaService {
 	@Autowired
 	private ArtistaRepository artistaRepository;
 	
-	public boolean adicionarArtista(Artista artista) {
+	public Artista adicionarArtista(Artista artista) {
 		if(!existeArtista(artista)){
-			artistaRepository.save(artista);
-			return true;
+			return artistaRepository.save(artista);
+			
 		}
-		return false;
+		return new Artista(); //Retorna uma flag
 		
 	}
 	
@@ -36,5 +36,6 @@ public class ArtistaService {
 	public List<Artista> getArtistas(){
 		return artistaRepository.findAll();
 	}
+	
 	
 }

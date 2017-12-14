@@ -28,10 +28,10 @@ public class Usuario{
 	private String senha;
 	
 	@OneToMany(cascade = CascadeType.ALL) //OneToMany - Relacionamento Usuario para muitas playlists. Em cascata (Cascade - Usado para persistir tambem as entidades relacionadas)
-	private List<Playlist> playlists = new ArrayList<Playlist>();
+	private List<Playlist> playlists;
 	
-	@ManyToMany(cascade = CascadeType.ALL) //Relacionamento de muitos para muitos. Um usuario se relaciona com varios artistas assim como um artista se relaciona com varios usuarios
-	private List<Artista> artistasFavoritos = new ArrayList<Artista>();
+	@OneToMany(cascade = CascadeType.ALL) //Relacionamento de um para muitos.
+	private List<Artista> artistasFavoritos;
 	
 	
 	

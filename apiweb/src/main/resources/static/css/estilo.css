@@ -1,0 +1,86 @@
+.marcador1{ /*Usado apenas para testar div's/containers, etc. Apagar*/
+	background: #E66E6E;
+	border: 1px solid blue;
+
+}
+
+/*ID do cabeçalho, da fonte*/
+#fonteCabecalho{
+	color: #FFFFFF;
+	font-size: 60px;
+
+}
+
+/*Fundo preto usado no cabecalho por exemplo - CadetBlue*/
+#blocoCabecalho{
+	background: #483D8B;
+	border: 1px solid #FFFFFF;
+	border-radius: 10px;
+	width: 100%;
+}
+
+.blocoCadastroLogin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blocoLinha{
+
+}
+
+.blocoDeOpcao{
+	border: 1px solid #5F9EA0;
+	border-radius: 5px;
+	box-shadow: 7px 7px 7px ;
+
+}
+
+.tabelaArtistasFavoritos{
+	width: 100%;
+	max-width: 650px;
+}
+
+.tabelaMusicas{
+	width: 100%;
+	max-width: 720px;
+}
+
+/*Cor de fundo*/
+.corDeFundo{
+	background-color: #40E0D0;
+}
+
+
+
+/* Menor largura para um bloco de nome em uma tabela */
+.blocoNome{
+	width: 100%;
+	max-width: 650px;
+}
+
+.tabelaArtista{
+	max-width: 650px;
+	width: 100%;
+}
+
+
+.imagemArtista{
+	min-height: 35px;
+	min-width: 35px;
+	max-height: 50px;
+	max-width: 50px;
+
+.imagemArtistaInfoDetalhada{
+	min-height: 35px;
+	min-width: 35px;
+	max-height: 35px;
+	max-width: 35px;
+}
+
+.linkTransparente{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+}

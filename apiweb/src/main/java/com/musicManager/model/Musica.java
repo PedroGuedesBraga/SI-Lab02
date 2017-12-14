@@ -14,13 +14,13 @@ public class Musica {
 	@Column
 	private String nome;
 	@Column
-	private String artista;
+	private String autor;
 	@Column
 	private String album;
 	@Column
 	private String ano;
 	@Column
-	private String tempoDeDuracao;
+	private String duracao;
 	
 	
 	public String getNome() {
@@ -29,11 +29,11 @@ public class Musica {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getArtista() {
-		return artista;
+	public String getAutor() {
+		return autor;
 	}
-	public void setArtista(String artista) {
-		this.artista = artista;
+	public void setAutor(String autor) {
+		this.autor = autor;
 	}
 	public String getAlbum() {
 		return album;
@@ -47,11 +47,11 @@ public class Musica {
 	public void setAno(String ano) {
 		this.ano = ano;
 	}
-	public String getTempoDeDuracao() {
-		return tempoDeDuracao;
+	public String getDuracao() {
+		return duracao;
 	}
-	public void setTempoDeDuracao(String tempoDeDuracao) {
-		this.tempoDeDuracao = tempoDeDuracao;
+	public void setDuracao(String duracao) {
+		this.duracao = duracao;
 	}
 	public Integer getId() {
 		return id;

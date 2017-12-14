@@ -23,8 +23,9 @@ public class ArtistaController {
 	
 	@RequestMapping(value = "/artistas", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Artista> adicionarArtista(@RequestBody Artista artista){
-		if(artistaService.adicionarArtista(artista)) {
-			return new ResponseEntity<>(artista, HttpStatus.CREATED);
+		Artista adicionado = artistaService.adicionarArtista(artista);
+		if(adicionado.getNome() != null) { //Se nao for uma flag, significa q adicionou msm o artista
+			return new ResponseEntity<>(adicionado, HttpStatus.CREATED);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 	}

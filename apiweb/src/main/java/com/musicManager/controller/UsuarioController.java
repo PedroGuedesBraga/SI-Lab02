@@ -16,6 +16,7 @@ import com.musicManager.model.Artista;
 import com.musicManager.model.Musica;
 import com.musicManager.model.Playlist;
 import com.musicManager.model.Usuario;
+import com.musicManager.service.ArtistaService;
 import com.musicManager.service.UsuarioService;
 
 @RestController
@@ -23,6 +24,9 @@ public class UsuarioController {
 	
 	@Autowired
 	UsuarioService usuarioService;
+	
+	@Autowired
+	ArtistaService artistaService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/usuarios/cadastro", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario){
@@ -35,9 +39,9 @@ public class UsuarioController {
 	
 	@RequestMapping(method = RequestMethod.POST, value="/usuarios/login", produces = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<Usuario> loginUsuario(@RequestBody Usuario usuario){
-		Usuario usuarioLogado = usuarioService.login(usuario.getEmail(), usuario.getSenha());
+		Usuario usuarioLogado = usuarioService.login(usuario.getNome(), usuario.getEmail(), usuario.getSenha());
 		//Se o usuario retornado pelo login nao for um "usuario null", retorna o usuario logado 
-		if(usuarioLogado.getEmail() != null && usuarioLogado.getSenha() != null) {
+		if(usuarioLogado.getNome() != null && usuarioLogado.getEmail() != null && usuarioLogado.getSenha() != null) {
 			return new ResponseEntity<>(usuarioLogado, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);

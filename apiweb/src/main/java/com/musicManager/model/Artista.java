@@ -16,7 +16,7 @@ public class Artista {
 	private String nome;
 	
 	@Column(length = 100000)
-	private String urlImagem;
+	private String imagem;
 	
 	
 	public String getNome() {
@@ -25,11 +25,11 @@ public class Artista {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getUrlImagem() {
-		return urlImagem;
+	public String getImagem() {
+		return imagem;
 	}
-	public void setUrlImagem(String urlImagem) {
-		this.urlImagem = urlImagem;
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 	public Integer getId() {
 		return id;

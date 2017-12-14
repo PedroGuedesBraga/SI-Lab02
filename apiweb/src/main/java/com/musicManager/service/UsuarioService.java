@@ -10,6 +10,7 @@ import com.musicManager.model.Artista;
 import com.musicManager.model.Musica;
 import com.musicManager.model.Playlist;
 import com.musicManager.model.Usuario;
+import com.musicManager.repository.ArtistaRepository;
 import com.musicManager.repository.UsuarioRepository;
 
 @Service
@@ -18,11 +19,14 @@ public class UsuarioService{
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	private ArtistaRepository artistaRepository;
+	
 	//Salva o usuario e retorna um boolean. //NOME E EMAIL DEVEM SER UNICOS!
 	public boolean cadastrar(Usuario usuario) { 
 		List<Usuario> usuarios = usuarioRepository.findAll();
 		for (Usuario u : usuarios){
-			if(u.getEmail().equals(usuario.getEmail()) || u.getNome().equals(usuario.getNome())) {
+			if(u.getNome().equals(usuario.getNome()) ||u.getEmail().equals(usuario.getEmail()) || u.getNome().equals(usuario.getNome())) {
 				return false;
 			}
 		}
@@ -31,10 +35,10 @@ public class UsuarioService{
 	}
 	
 	//Retorna o usuario achado no BD a partir do email e senha dados
-	public Usuario login(String email, String senha) {
+	public Usuario login(String nome, String email, String senha) {
 		List<Usuario> todosUsuarios = usuarioRepository.findAll();
 		for (Usuario u : todosUsuarios) {
-			if(u.getEmail().equals(email) && u.getSenha().equals(senha)) {
+			if(u.getNome().equals(nome) && u.getEmail().equals(email) && u.getSenha().equals(senha)) {
 				return u;	
 			}
 		}
