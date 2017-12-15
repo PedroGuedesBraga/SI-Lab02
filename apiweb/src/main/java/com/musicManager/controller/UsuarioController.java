@@ -48,7 +48,7 @@ public class UsuarioController {
 	}
 	
 	//Adiciona uma nova playlist (%20 para tratar espacos)
-	@RequestMapping(value="usuarios/playlist/{nomeDoUsuario}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/usuarios/playlist/{nomeDoUsuario}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Playlist> adicionarPlaylist(@RequestBody Playlist playlist, @PathVariable String nomeDoUsuario){
 		
 		if(usuarioService.adicionarPlaylist(playlist, nomeDoUsuario)) {

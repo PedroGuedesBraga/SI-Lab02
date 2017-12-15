@@ -21,12 +21,15 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 	});
 
 	//popula a tabela de musicas
-	$http({method: 'GET', url:'http://localhost:8080/musicas'})
-	.then(function(response){
-		$scope.musicas = response.data;
-	}, function(response){
-		console.log(response.status);
-	});
+	$scope.fillMusicas = function(){
+		$http({method: 'GET', url:'http://localhost:8080/musicas'})
+		.then(function(response){
+			$scope.musicas = response.data;
+		}, function(response){
+			console.log(response.status);
+		});		
+	}
+	$scope.fillMusicas(); //Atualiza as musicas pegando as que estao no bd. Só pode chamar depois que definir
 	
 
 	$scope.cadastrarUsuario = function(usuario){
@@ -48,6 +51,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 			console.log($scope.usuarioLogado);
 			$scope.usuarioLogadoStatus = true;
 			$scope.fillArtistasFavoritos(); //Toda vez que logar, ja carrega o array com artistas favoritos do banco de dados
+			$scope.fillPlaylists();
 		}, function(response){
 			alert("Não foi possivel logar no sistema, tente novamente!")
 		});
@@ -60,10 +64,10 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 		}else{
 			$http({method:'POST', url: 'http://localhost:8080/usuarios/favoritos/' + $scope.usuarioLogado.id, data: favorito})
 			.then(function(response){
-				alert("Artista adicionado na sua coleção de artistas favoritos com sucesso!")
+				alert("Artista adicionado na sua coleção de artistas favoritos com sucesso!");
 				$scope.fillArtistasFavoritos();
 			}, function(response){
-				alert("Não foi possivel adicionar o artista na sua coleção de artistas favoritos!")
+				alert("Não foi possivel adicionar o artista na sua coleção de artistas favoritos!");
 			});
 		}
 	}
@@ -72,9 +76,9 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 		$http({method: 'DELETE', url: '/usuarios/favoritos/' + idUsuario + "/" + idFavorito})
 		.then(function(response){
 			$scope.fillArtistasFavoritos(); //Atualiza o array de artistas favoritos, ja que mexeu no bd
-			alert("Artista excluído da sua coleção de artistas favoritos com sucesso!")
+			alert("Artista excluído da sua coleção de artistas favoritos com sucesso!");
 			}, function(response){
-			alert("Não foi possível excluir o artista da sua coleção de artistas favoritos!")	
+			alert("Não foi possível excluir o artista da sua coleção de artistas favoritos!");	
 			});
 		}
 	
@@ -129,6 +133,49 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 
 			}, function(response){ //callback de "insucesso"
 				alert("Não foi possível adicionar o artista no sistema");
+			});
+		}
+	}
+	
+	$scope.addPlaylist = function(playlist){
+		if(!$scope.usuarioLogadoStatus){
+			alert("Você precisa estar logado para realizar esta ação!")
+		}else{
+			$http({method: 'POST',	 url:'http://localhost:8080/usuarios/playlist/' + $scope.usuarioLogado.nome, data: playlist})
+			.then(function(response){
+				delete $scope.playlist;
+				$scope.fillPlaylists();
+				alert("Playlist adicionada com sucesso!");
+			}, function(response){
+				alert("Não foi possível adicionar a playlist ao sistema!");
+			});
+		}
+		
+	}
+	
+	$scope.fillPlaylists = function(){
+		if($scope.usuarioLogadoStatus){
+			$http({method: 'GET', url:'http://localhost:8080/usuarios/playlist/' + $scope.usuarioLogado.nome})
+			.then(function(response){
+				$scope.playlists = response.data;
+				$scope.usuarioLogado.playlists = response.data;
+				console.log($scope.usuarioLogado);
+			}, function(response){
+				
+			});
+		}
+	}
+	
+	$scope.addMusicaEmPlaylist = function(nomeDaPlaylist, musica){
+		if(!$scope.usuarioLogadoStatus){
+			alert("É preciso estar logado para realizar esta ação!")
+		}else{
+			$http({method: 'POST', url:'http://localhost:8080/usuarios/playlist/' + $scope.usuarioLogado.nome + '/' + nomeDaPlaylist, data: musica})
+			.then(function(response){
+				alert("Musica adicionada na playlist com sucesso!");
+				$scope.fillPlaylists(); //Atualiza as playlists
+			}, function(response){
+				alert("Não foi possível adicionar a música na playlist!");
 			});
 		}
 	}
@@ -325,7 +372,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 		}else{
 			$http({method:'POST', url:'http://localhost:8080/musicas', data: musica})
 			.then(function(response){
-				$scope.musicas.push(musica);
+				$scope.fillMusicas();
 				delete $scope.musica;
 			}, function(response){
 				alert("Não foi possivel adicionar a musica no sistema")

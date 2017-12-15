@@ -303,7 +303,7 @@
                   <input class="form-control" type="text" ng-required="true" ng-model="nomePlaylist"/>
                 </div>
                 <div class="modal-footer">
-                  <button class="btn btn-primary" ng-click="adicionaMusicaNaPlaylist(selected, nomePlaylist)" ng-disabled="modalAdicionarMusicaNaPlaylist.$invalid">Adicionar música</button>
+                  <button class="btn btn-primary" ng-click="addMusicaEmPlaylist(nomePlaylist, selected)" ng-disabled="modalAdicionarMusicaNaPlaylist.$invalid">Adicionar música</button>
                 </div>
 
               </div>
@@ -397,10 +397,10 @@
                   </div>
                   <div class="modal-body">
                     <h6>Digite o nome da nova playlist:</h6>
-                    <input type="text" class="form-control" ng-model="nomeDaPlaylist"/>
+                    <input type="text" class="form-control" ng-model="playlist.nome"/>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="adicionaPlaylist(nomeDaPlaylist)">Criar</button>
+                    <button type="button" class="btn btn-primary" ng-click="addPlaylist(playlist)">Criar</button>
                   </div>
                 </div>
 
@@ -446,7 +446,7 @@
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                  <div ng-repeat="musica in selected.retornaMusicas()">
+                  <div ng-repeat="musica in selected.musicas">
                     <h6>-{{musica.nome}} <button type="button" class="btn btn-danger btn-sm" ng-click="excluirMusicaDaPlaylist(selected, musica)"><i class="fa fa-trash" aria-hidden="true"></i></button></h6>
                   </div>
                 </div>
