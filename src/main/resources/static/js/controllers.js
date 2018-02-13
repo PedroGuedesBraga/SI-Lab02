@@ -126,7 +126,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 		if(existeArtista(artista)){
 			alert("Artista já existente no sistema");
 		}else{
-			$http({method: 'POST', url: 'http://musitecasi.herokuapp.com/artistas', data: artista})
+			$http({method: 'POST', url: 'https://musitecasi.herokuapp.com/artistas', data: artista})
 			.then(function(response){ //callback de sucesso
 				$scope.artistas.push(response.data); //Pois nao e atualizado com o bd automaticamente. Adicionar o artista que é o retorno da requisicao(este ja tem id)
 				delete $scope.artista; //Para se quando for mexer no campo, nao ficar modificando um artista q ja esta na tabela
@@ -141,7 +141,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 		if(!$scope.usuarioLogadoStatus){
 			alert("Você precisa estar logado para realizar esta ação!")
 		}else{
-			$http({method: 'POST',	 url:'http://musitecasi.herokuapp.com/usuarios/playlist/' + $scope.usuarioLogado.nome, data: playlist})
+			$http({method: 'POST',	 url:'https://musitecasi.herokuapp.com/usuarios/playlist/' + $scope.usuarioLogado.nome, data: playlist})
 			.then(function(response){
 				delete $scope.playlist;
 				$scope.fillPlaylists();
