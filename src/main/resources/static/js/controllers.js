@@ -13,7 +13,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 	$scope.selected; //Variavel usada para se referir ao artista que se está tratando se quiser exibir mais informacoes (US03) - Ver: https://stackoverflow.com/questions/33904251/ng-repeat-does-not-work-in-bootstrap-modal
 	
 	//Requisicao http feita toda vez que o js for interpretado(toda vez que atualizar a pagina), para carregar os artistas
-	$http({method: 'GET', url:'http://musitecasi.herokuapp.com/artistas'})
+	$http({method: 'GET', url:'https://musitecasi.herokuapp.com/artistas'})
 	.then(function(response){
 		$scope.artistas = response.data;
 	}, function(response){
@@ -22,7 +22,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 
 	//popula a tabela de musicas
 	$scope.fillMusicas = function(){
-		$http({method: 'GET', url:'http://musitecasi.herokuapp.com/musicas'})
+		$http({method: 'GET', url:'https://musitecasi.herokuapp.com/musicas'})
 		.then(function(response){
 			$scope.musicas = response.data;
 		}, function(response){
@@ -33,7 +33,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 	
 
 	$scope.cadastrarUsuario = function(usuario){
-		$http({method:'POST', url:'http://musitecasi.herokuapp.com/usuarios/cadastro', data: usuario})
+		$http({method:'POST', url:'https://musitecasi.herokuapp.com/usuarios/cadastro', data: usuario})
 		.then(function(response){
 			alert("Usuario cadastrado com sucesso!");
 			delete $scope.usuarioParaCadastrar;
@@ -43,7 +43,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 	}
 
 	$scope.logarUsuario = function(usuario){
-		$http({method:'POST', url: 'http://musitecasi.herokuapp.com/usuarios/login', data: usuario})
+		$http({method:'POST', url: 'https://musitecasi.herokuapp.com/usuarios/login', data: usuario})
 		.then(function(response){
 			alert("Usuario logado com sucesso!");
 			delete $scope.usuarioParaLogar;
@@ -62,7 +62,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 		if(!$scope.usuarioLogadoStatus){
 			alert("Você precisa estar logado para realizar essa ação!")
 		}else{
-			$http({method:'POST', url: 'http://musitecasi.herokuapp.com/usuarios/favoritos/' + $scope.usuarioLogado.id, data: favorito})
+			$http({method:'POST', url: 'https://musitecasi.herokuapp.com/usuarios/favoritos/' + $scope.usuarioLogado.id, data: favorito})
 			.then(function(response){
 				alert("Artista adicionado na sua coleção de artistas favoritos com sucesso!");
 				$scope.fillArtistasFavoritos();
@@ -73,7 +73,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 	}
 	
 	$scope.excluirArtistaFavorito = function(idUsuario, idFavorito){
-		$http({method: 'DELETE', url: 'http://musitecasi.herokuapp.com/usuarios/favoritos/' + idUsuario + "/" + idFavorito})
+		$http({method: 'DELETE', url: 'https://musitecasi.herokuapp.com/usuarios/favoritos/' + idUsuario + "/" + idFavorito})
 		.then(function(response){
 			$scope.fillArtistasFavoritos(); //Atualiza o array de artistas favoritos, ja que mexeu no bd
 			alert("Artista excluído da sua coleção de artistas favoritos com sucesso!");
@@ -85,7 +85,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 	//Carrega/enche/atualiza o array que tem os artistas favoritos de um usuario
 	$scope.fillArtistasFavoritos = function(){
 		if($scope.usuarioLogadoStatus){
-			$http({method:'GET', url: 'http://musitecasi.herokuapp.com/usuarios/favoritos/'+$scope.usuarioLogado.id})
+			$http({method:'GET', url: 'https://musitecasi.herokuapp.com/usuarios/favoritos/'+$scope.usuarioLogado.id})
 			.then(function(response){
 				$scope.artistasFavoritos = response.data;
 				$scope.usuarioLogado.favoritos = response.data;
@@ -155,7 +155,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 	
 	$scope.fillPlaylists = function(){
 		if($scope.usuarioLogadoStatus){
-			$http({method: 'GET', url:'http://musitecasi.herokuapp.com/usuarios/playlist/' + $scope.usuarioLogado.nome})
+			$http({method: 'GET', url:'https://musitecasi.herokuapp.com/usuarios/playlist/' + $scope.usuarioLogado.nome})
 			.then(function(response){
 				$scope.playlists = response.data;
 				$scope.usuarioLogado.playlists = response.data;
@@ -170,7 +170,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 		if(!$scope.usuarioLogadoStatus){
 			alert("É preciso estar logado para realizar esta ação!")
 		}else{
-			$http({method: 'POST', url:'http://musitecasi.herokuapp.com/usuarios/playlist/' + $scope.usuarioLogado.nome + '/' + nomeDaPlaylist, data: musica})
+			$http({method: 'POST', url:'https://musitecasi.herokuapp.com/usuarios/playlist/' + $scope.usuarioLogado.nome + '/' + nomeDaPlaylist, data: musica})
 			.then(function(response){
 				alert("Musica adicionada na playlist com sucesso!");
 				$scope.fillPlaylists(); //Atualiza as playlists
@@ -370,7 +370,7 @@ angular.module("sistemaDeMusica").controller("sistemaController", function($scop
 		if(containsMusica($scope.musicas, musica.nome)){
 			alert("Musica ja existente no sistema")
 		}else{
-			$http({method:'POST', url:'http://musitecasi.herokuapp.com/musicas', data: musica})
+			$http({method:'POST', url:'https://musitecasi.herokuapp.com/musicas', data: musica})
 			.then(function(response){
 				$scope.fillMusicas();
 				delete $scope.musica;
