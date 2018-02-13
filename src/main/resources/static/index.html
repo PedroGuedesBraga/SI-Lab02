@@ -161,7 +161,7 @@
 
               </tr>
               <tr ng-repeat="artista in artistas | filter:nomeArtistaBuscado">
-                <td class="blocoNome"><span data-toggle="modal" data-target = "#infoArtista" ng-click="select(artista)" >{{artista.id}} - {{artista.nome}}</span></td>
+                <td class="blocoNome"><span data-toggle="modal" data-target = "#infoArtista" ng-click="select(artista)" >{{artista.nome}}</span></td>
                 <td><img class="img-fluid rounded imagemArtista" ng-src="{{artista.imagem}}"></td>
                 <td><button type="button" class="btn btn-danger" ng-click="adicionaArtistaFavorito(artista)"><i class="fa fa-heart" aria-hidden="true"></i></button></td>
 
